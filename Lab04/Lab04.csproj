@@ -13,9 +13,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Services\Validators\" />
-  </ItemGroup>
-
 </Project>

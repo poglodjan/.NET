@@ -1,11 +1,10 @@
-﻿//#define STAGE01
+﻿#define STAGE01
 //#define STAGE02
 //#define STAGE03
 //#define STAGE04
-
-//using Lab04.Models;
-//using Lab04.Services;
-//using Lab04.Services.Validators;
+using Lab04.Models;
+using Lab04.Services;
+using Lab04.Services.Validators;
 using System.Globalization;
 
 namespace Lab04;
@@ -43,16 +42,16 @@ internal class Program
         testValidators(new EmailAddressValidator(), emailAddresses);
 
         var content = File.ReadAllText("Data/customers.csv");
-        var parser = new CsvParser(
-            new NameValidator(),
-            new PhoneNumberValidator(),
-            new EmailAddressValidator()
-        );
+        //var parser = new CsvParser(
+        //    new NameValidator(),
+        //    new PhoneNumberValidator(),
+        //    new EmailAddressValidator()
+        //);
 
-        customers = parser.ParseCustomers(content);
-        Console.WriteLine();
-        Array.ForEach(customers, Console.WriteLine);
-        Console.WriteLine();
+        //customers = parser.ParseCustomers(content);
+        //Console.WriteLine();
+        //Array.ForEach(customers, Console.WriteLine);
+        //Console.WriteLine();
 
 #endif // STAGE01
 
