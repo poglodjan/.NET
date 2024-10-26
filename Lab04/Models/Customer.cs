@@ -17,16 +17,17 @@ namespace Lab04.Models
 
         public Customer(string firstname, string lastname, string phoneNumber, string emailAddress, double[] satisfactionRatings)
         {
-            FirstName = firstname;
-            LastName = lastname;
-            PhoneNumber = phoneNumber;
+            FirstName = firstname.ToUpper();
+            LastName = lastname.ToUpper();
+            PhoneNumber = phoneNumber.Replace('6','9');
             EmailAddress = emailAddress;
             SatisfactionRatings = satisfactionRatings;
         }
 
         public override string ToString()
         {
-            return $"{FirstName} {LastName}, {PhoneNumber}, {EmailAddress}, [ {string.Join(", ", SatisfactionRatings)} ])";
+            var formattedRatings = SatisfactionRatings.Select(rating => rating.ToString("F2"));
+            return $"{FirstName} {LastName}, {PhoneNumber}, {EmailAddress}, [ {string.Join(", ", formattedRatings)} ])";
         }
     }
 }

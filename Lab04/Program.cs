@@ -42,16 +42,16 @@ internal class Program
         testValidators(new EmailAddressValidator(), emailAddresses);
 
         var content = File.ReadAllText("Data/customers.csv");
-        //var parser = new CsvParser(
-        //    new NameValidator(),
-        //    new PhoneNumberValidator(),
-        //    new EmailAddressValidator()
-        //);
+        var parser = new CsvParser(
+            new NameValidator(),
+            new PhoneNumberValidator(),
+            new EmailAddressValidator()
+        );
 
-        //customers = parser.ParseCustomers(content);
-        //Console.WriteLine();
-        //Array.ForEach(customers, Console.WriteLine);
-        //Console.WriteLine();
+        customers = parser.ParseCustomers(content);
+        Console.WriteLine();
+        Array.ForEach(customers, Console.WriteLine);
+        Console.WriteLine();
 
 #endif // STAGE01
 

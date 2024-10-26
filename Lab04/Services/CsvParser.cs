@@ -1,6 +1,8 @@
 ﻿using Lab04.Models;
+using Lab04.Services.Validators;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
@@ -11,41 +13,73 @@ namespace Lab04.Services
 {
     internal class CsvParser
     {
+        private readonly NameValidator _nameValidator;
+        private readonly PhoneNumberValidator _phoneValidator;
+        private readonly EmailAddressValidator _emailValidator;
+
+        public CsvParser(NameValidator nameValidator, 
+                PhoneNumberValidator phoneValidator,
+                EmailAddressValidator emailValidator)
+        {
+            _nameValidator = nameValidator;
+            _phoneValidator = phoneValidator;
+            _emailValidator = emailValidator;
+        }
+
         public Customer[] ParseCustomers(string content)
         {
             List<Customer> customers = new List<Customer>();
-            string[] lines = content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            var lines = content.Split('\n');
 
             for (int i= 0; i<lines.Length; i++)
             {
-                string line = lines[i];
-                string[] columns = line.Split(',');
-                if (columns.Length != 3)
+                var line = lines[i].Trim();
+                if(string.IsNullOrEmpty(line)) continue;
+                var parts = line.Split(';');
+                if(parts.Length<4)
                 {
-                    string timestamp = DateTime.Now.ToString("G");
-                    Console.WriteLine($"[{timestamp}] Invalid Customer in line {line+1}.");
+                    PrintInvalidCustomer(i+1); // I check wheter there are 4 values in a row
+                    continue;
                 }
-
-                string name = columns[0].Trim();
-                string phone = columns[1].Trim();
-                string email = columns[2].Trim();
-                string ratings = columns[3].Trim();
-                name = name.ToUpper();
-                phone = phone.Replace('6', '9');
-                double[] SatRatings = ratings.Trim(new char[] { '[', ']' })      
-                    .Split(',')                           
-                    .Select(x => double.Parse(x.Trim()))  
-                    .ToArray();                          
-
-                foreach (double number in SatRatings)
+                var nameparts = parts[0].Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (nameparts.Length < 2)
                 {
-                    Console.WriteLine(number);
+                    PrintInvalidCustomer(i + 1); // say error if there is no | firstname | lastname |
+                    continue;
                 }
-
-                customers.Add(new Customer(name,
-                    name, phone, email, SatRatings));
+                string firstname = nameparts[0].Trim();
+                string lastname = nameparts[1].Trim();
+                string phone = parts[1].Trim();
+                string email = parts[2].Trim();
+                string ratings = parts[3].Trim();
+                double[] satisfactionRatings = ratings.Trim('[',']')
+                                                 .Split(',')
+                                                 .Select(double.Parse)
+                                                 .ToArray();
+                if(!_nameValidator.Validate(firstname) || !_nameValidator.Validate(lastname))
+                {
+                    PrintInvalidCustomer(i+1);
+                    continue;
+                }
+                if(!_phoneValidator.Validate(phone))
+                {
+                    PrintInvalidCustomer(i+1);
+                    continue;
+                }
+                if(!_emailValidator.Validate(email))
+                {
+                    PrintInvalidCustomer(i+1);
+                    continue;
+                }
+                Customer customer = new Customer(firstname, lastname, phone, email, satisfactionRatings);
+                customers.Add(customer);
             }
             return customers.ToArray();
+        }
+        private void PrintInvalidCustomer(int lineNumber)
+        {
+            var timeStamp = DateTime.Now.ToString("g", CultureInfo.CreateSpecificCulture("en-US"));
+            Console.WriteLine($"[{timeStamp}] Invalid Customer in line {lineNumber}.");
         }
     }
 }
