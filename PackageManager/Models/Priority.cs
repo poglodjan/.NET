@@ -1,6 +1,6 @@
 using System;
 
-namespace Lab04.Models
+namespace PackageManager.Models
 {
     [Flags]
     public enum Priority
