@@ -1,5 +1,5 @@
 ﻿#define STAGE01
-//#define STAGE02
+#define STAGE02
 //#define STAGE03
 //#define STAGE04
 using Lab04.Models;
@@ -70,7 +70,7 @@ internal class Program
         Console.WriteLine($"{nameof(package3)} == {nameof(package4)}: {package3 == package4}");
         Console.WriteLine($"{nameof(package3)} == {nameof(package5)}: {package3 == package5}");
 
-        var package6 = (Package)(10.5, 12.12); // explicit conversion
+        var package6 = (Package)(10.5, 12.12); 
 
         var locations = new Location[]
         {
