@@ -1,6 +1,6 @@
 ﻿#define STAGE01
 #define STAGE02
-//#define STAGE03
+#define STAGE03
 //#define STAGE04
 using Lab04.Models;
 using Lab04.Services;
