@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Lab04.Models
+namespace PackageManager.Models
 {
     public class Customer
     {
