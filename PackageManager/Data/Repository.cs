@@ -1,7 +1,7 @@
-﻿using PackageManager.Models;
+﻿using Lab04.Models;
 using System.Globalization;
 
-namespace PackageManager.Data;
+namespace Lab04.Data;
 public static class Repository
 {
     private static Location[] _locations = [
