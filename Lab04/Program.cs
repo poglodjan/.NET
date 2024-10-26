@@ -1,7 +1,7 @@
 ﻿#define STAGE01
 #define STAGE02
 #define STAGE03
-//#define STAGE04
+#define STAGE04
 using Lab04.Models;
 using Lab04.Services;
 using Lab04.Services.Validators;
@@ -116,7 +116,7 @@ internal class Program
 #if STAGE04
 
         var packageManager = new PackageManager();
-        for (var i = 20; i > 0; i--, packageManager.CreatePackage()) ;
+        for (int i = 20; i > 0; i--, packageManager.CreatePackage()) ;
 
         packageManager.MakeReport();
         Console.WriteLine();
@@ -125,7 +125,7 @@ internal class Program
 
         Array.ForEach(packageManager[DateTime.Now.AddDays(-5), DateTime.Now.AddDays(5)], displayPackage);
         Console.WriteLine();
-        Array.ForEach(packageManager[..^1], displayPackage);
+        Array.ForEach(packageManager[..^1], displayPackage); // od początku do przedostatniego elementu”.
 
 #endif // STAGE04
         Console.ReadKey();
