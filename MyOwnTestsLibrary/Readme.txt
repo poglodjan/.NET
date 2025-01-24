@@ -1,5 +1,4 @@
 Created library for unit testing. Output:
-MiniTestRunner did not get the path in args, you can add them manually (C:\Users\...)
 Loading assembly: C:\Users\janpoglod\Desktop\C#\p1\MiniTest\AuthenticationService.Tests\bin\Debug\net6.0\AuthenticationService.Tests.dll
 Running tests from class AuthenticationService.Tests.AuthServiceTests...
 GetRegisteredUserData_ExistingUsername_ShouldThrowError      : PASSED
